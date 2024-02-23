@@ -2,11 +2,8 @@ import express from 'express'
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import userRoutes from './routes/user.route.js'
-<<<<<<< HEAD
-import authRoutes from './routes/auth.route.js'
-=======
->>>>>>> be10ddff2d1ef973a54c70bbc4ec6670e880649e
 
+import authRoutes from './routes/auth.route.js'
 dotenv.config();
 
 mongoose.connect(process.env.MONGO).then(() =>{
@@ -24,9 +21,21 @@ app.listen(3000, () => {
 }
 );
 
-<<<<<<< HEAD
+
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
-=======
+
 app.use('/api/user', userRoutes);
->>>>>>> be10ddff2d1ef973a54c70bbc4ec6670e880649e
+
+// creating middle ware
+
+app.use((err, req, res, next) => {
+    const statusCode =err.statusCode || 500;
+    const message = err.message || 'Internal Server Error';
+    res.status(statusCode).json({
+        success: false,
+        statusCode,
+        message
+    })
+
+});
