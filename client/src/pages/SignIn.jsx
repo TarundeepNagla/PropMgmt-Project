@@ -2,12 +2,17 @@ import React from 'react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Label, TextInput, Alert, Spinner} from 'flowbite-react';
-
+import { signInStart, signInSuccess, signInFailure } from '../redux/user/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+// import OAuth from '../components/OAuth';
 
 export default function SignIn() {
   const [formData, setFormData] = useState({}); // Initial state is an empty object
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [loading, setLoading] = useState(false);
+  // const [errorMessage, setErrorMessage] = useState(null);
+  // const [loading, setLoading] = useState(false);
+  const {loading, error: errorMessage } = useSelector(state=> state.user);
+  // To initialize the user slice imported (SignInStart, success and failure), we use dispath.
+  const dispatch = useDispatch();
   const navigate = useNavigate(); // initialization of useNavigate
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
@@ -15,11 +20,12 @@ export default function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
-      return setErrorMessage('All fields are mandatory');
+      return dispatch(signInFailure('All fields are mandatory'));
     }
     try {
-        setLoading(true); // means fetching of data from API is in progress.
-        setErrorMessage(null); // cleanup previous error messages
+        // setLoading(true); // means fetching of data from API is in progress.
+        // setErrorMessage(null); // cleanup previous error messages
+        dispatch(signInStart());
         const res = await fetch('/api/auth/signin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -27,15 +33,19 @@ export default function SignIn() {
       });
       const data = await res.json();
       if (data.success == false){
-        return setErrorMessage(data.message)
+        // return setErrorMessage(data.message); == instead of this, we are using below redux dispatch function
+        dispatch(signInFailure(data.message));
+
       }
-      setLoading(false);
+      
       if(res.ok){
+        dispatch(signInSuccess(data));
         navigate('/');
       }
     } catch (error) {
-      setErrorMessage(error.message);
-      setLoading(false);
+      // setErrorMessage(error.message);
+      // setLoading(false);
+      dispatch(signInFailure(error.message));
     }
   };
 
