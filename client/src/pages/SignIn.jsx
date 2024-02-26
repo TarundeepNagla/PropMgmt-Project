@@ -4,7 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button, Label, TextInput, Alert, Spinner} from 'flowbite-react';
 import { signInStart, signInSuccess, signInFailure } from '../redux/user/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
-// import OAuth from '../components/OAuth';
+import OAuth from '../components/OAuth';
+
 
 export default function SignIn() {
   const [formData, setFormData] = useState({}); // Initial state is an empty object
@@ -102,6 +103,7 @@ export default function SignIn() {
                 
               }
             </Button>
+            <OAuth />
           </form>
           <div className='flex gap-2 text-sm mt-5'>
             <span>Dont have an account?</span>
