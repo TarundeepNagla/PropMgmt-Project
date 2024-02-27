@@ -1,16 +1,20 @@
 import React from 'react'
-import { Navbar, Button, TextInput } from 'flowbite-react';
+import { Navbar, Button, TextInput, Avatar, DropdownHeader } from 'flowbite-react';
 import { NavbarBrand } from 'flowbite-react';
 import { Link, useLocation } from 'react-router-dom';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { FaMoon, FaSun } from 'react-icons/fa';
-// import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 // import { toggleTheme } from '../redux/theme/themeSlice';
 // import { signoutSuccess } from '../redux/user/userSlice';
 import { useEffect, useState } from 'react';
+import { current } from '@reduxjs/toolkit';
+import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from 'react-icons/hi';
+import { Dropdown } from 'flowbite-react';
 
 export default function Header() {
     const path = useLocation().pathname;
+    const {currentUser} = useSelector(state=> state.user) // to fetch user name(current user) defined in userSlice (Store)
   return (
     <Navbar className='border-b-2'> 
         <Link to='/'className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white' color='blue'>
@@ -34,13 +38,39 @@ export default function Header() {
             <Button className='w-12 h-10 hidden sm:inline' color='gray' pill>
                 <FaMoon />
             </Button>
-            <Link to='/sign-in'>
-                <Button color="blue" outline>
-                    SignIn
+            {currentUser ? (
+                <Dropdown
+                    arrowIcon={false}
+                    label={
+                        <Avatar 
+                            alt='user'
+                            img={currentUser.profilePicture}
+                            rounded
+                        />
+                    }
+                >
+                    <Dropdown.Header>
+                        <span className='block text-sm'>@{currentUser.username}</span>
+                        <span className='block text-sm truncate'>@{currentUser.email}</span>
+                    </Dropdown.Header>
+                        <Link to={'/dashboard?tab=profile'}>
+                            <Dropdown.Item>
+                                Profile
+                            </Dropdown.Item>
+                        </Link>
+                    <Dropdown.Divider />
+                    <Dropdown.Item>Sign Out</Dropdown.Item>
+                    
+                </Dropdown>
+            ):(
+            <Link to='/signin'>
+                <Button gradientDuoTone='purpleToBlue' outline>
+                    Sign in
                 </Button>
             </Link>
+            )
+            }
             <Navbar.Toggle />
-            
         </div>
         <Navbar.Collapse>
             <Navbar.Link active={path === "/"} as={'div'}>
