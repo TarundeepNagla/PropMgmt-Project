@@ -123,6 +123,11 @@ export default function DashProfile() {
       <Button type='submit'>
         Update
       </Button>
+      <Link to={'/create-property'}>
+      <Button type='button' className='w-full'>
+        Add Property
+      </Button>
+      </Link>
     </form>   
     <div className='text-red-500 flex justify-between mt-5'>
       <span className='cursor-pointer'>Delete Account</span>
