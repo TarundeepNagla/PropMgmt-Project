@@ -123,7 +123,7 @@ export default function DashProfile() {
       <Button type='submit'>
         Update
       </Button>
-      <Link to={'/create-property'}>
+      <Link to={'/create-listing'}>
       <Button type='button' className='w-full'>
         Add Property
       </Button>

@@ -9,7 +9,7 @@ import Home from './pages/Home';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import PrivateRoute from './components/PrivateRoute'
-import CreateProperty from './pages/Createproperty';
+import CreateListing from './pages/CreateListing';
 
 export default function App() {
   return (
@@ -21,7 +21,7 @@ export default function App() {
         {/* create private routes for this to be accessible only when user is logged. */}
         <Route element={<PrivateRoute />}>
           <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/create-property' element={<CreateProperty />} />
+          <Route path='/create-listing' element={<CreateListing />} />
           <Route path='/' element={<Home />} />
         </Route>
         <Route path='/projects' element={<Projects />} />
