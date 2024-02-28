@@ -6,7 +6,7 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { FaMoon, FaSun } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
 // import { toggleTheme } from '../redux/theme/themeSlice';
-// import { signoutSuccess } from '../redux/user/userSlice';
+import { signoutSuccess } from '../redux/user/userSlice';
 import { useEffect, useState } from 'react';
 import { current } from '@reduxjs/toolkit';
 import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from 'react-icons/hi';
@@ -15,6 +15,22 @@ import { Dropdown } from 'flowbite-react';
 export default function Header() {
     const path = useLocation().pathname;
     const {currentUser} = useSelector(state=> state.user) // to fetch user name(current user) defined in userSlice (Store)
+    const dispatch = useDispatch();
+    const handleSignout = async () => {
+        try {
+          const res = await fetch('/api/user/signout', {
+            method: 'POST',
+          });
+          const data = await res.json();
+          if (!res.ok) {
+            console.log(data.message);
+          } else {
+            dispatch(signoutSuccess());
+          }
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
   return (
     <Navbar className='border-b-2'> 
         <Link to='/'className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white' color='blue'>
@@ -59,7 +75,7 @@ export default function Header() {
                             </Dropdown.Item>
                         </Link>
                     <Dropdown.Divider />
-                    <Dropdown.Item>Sign Out</Dropdown.Item>
+                    <Dropdown.Item onClick={handleSignout}>Sign Out</Dropdown.Item>
                     
                 </Dropdown>
             ):(
