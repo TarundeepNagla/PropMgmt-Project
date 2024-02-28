@@ -50,7 +50,7 @@ export const signin = async (req, res, next) => {
         }
 
         const token = jwt.sign(
-            { id: validUser._id },
+            { id: validUser._id, isAdmin: validUser.isAdmin },
             process.env.JWT_SECRET
         );
         //  to sepearate password from rest of the response. (as we are receiving password also as part of response) which should not be the case.
