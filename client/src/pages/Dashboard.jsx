@@ -5,7 +5,7 @@ import DashProfile from '../components/DashProfile';
 // import DashPosts from '../components/DashPosts';
 import DashUsers from '../components/DashUsers';
 import DashAgent from '../components/Dashboardagent';
-import DashProperty from '../components/DashboardProperty';
+import DashListings from '../components/Dashlistings';
 import DashServices from '../components/Dashboardservices';
 
 export default function Dashboard() {
@@ -25,6 +25,7 @@ export default function Dashboard() {
         {/* Sidebar */}
         <DashSidebar />
       </div>
+      
       {/* profile... */}
       {tab === 'profile' && <DashProfile />}
       {/* posts... */}
@@ -32,7 +33,7 @@ export default function Dashboard() {
       {/* users */}
       {tab === 'users' && <DashUsers />}
       {/* property  */}
-      {tab === 'myproperty' && <DashProperty />}
+      {tab === 'listings' && <DashListings />}
       {/* myagent */}
       {tab === 'myagent' && <DashAgent />}
       {/* services */}

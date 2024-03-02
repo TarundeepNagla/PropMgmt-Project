@@ -5,11 +5,12 @@ import {
     HiDocumentText,
     HiOutlineUserGroup,
     HiAnnotation,
-    HiChartPie,
+    HiOutlinePlusCircle,
     HiOutlineHome ,
     HiOutlineUser ,
     HiOutlineClipboardList ,
 } from 'react-icons/hi';
+
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { signoutSuccess } from '../redux/user/userSlice';
@@ -18,6 +19,7 @@ import { useSelector } from 'react-redux';
 
 export default function DashSidebar() {
     const location = useLocation();
+    const {currentUser} = useSelector(state => state.user)
     const dispatch = useDispatch();
     const [tab, setTab] = useState('');
     useEffect(() => {
@@ -45,29 +47,43 @@ export default function DashSidebar() {
         }
       };
     return (
+        <div>
         <Sidebar className='w-full md:w-56'>
             <Sidebar.Items>
-                <Sidebar.ItemGroup>
+                <Sidebar.ItemGroup className='flex flex-col gap-5'>
                     <Link to="/dashboard?tab=profile">
                     <Sidebar.Item 
                     active={tab=='profile'} 
                     icon={HiUser} 
-                    label={"user"} 
+                    label={currentUser.isAdmin ? 'Admin': 'User'} 
                     labelColor="dark"
                     as='div'>
                         Profile
                     </Sidebar.Item>
                     </Link>
-                    <Link to="/myproperty">
+                    {/* <Link to="/myproperty"> */}
+                    {/* <Link to={`/listing/${currentUser._id}`}> */}
+                    <Link to='/dashboard?tab=listings'>
                     <Sidebar.Item 
-                    active={tab=='myproperty'} 
+                    active={tab=='listings'} 
                     icon={HiOutlineHome} 
                     label={""} 
                     labelColor="dark"
                     as='div'>
-                        My Property
+                        View My Listings
                     </Sidebar.Item>
                     </Link>
+                    
+                    <Link to='/create-listing'>
+                    <Sidebar.Item 
+                    icon={HiOutlinePlusCircle} 
+                    label={""} 
+                    labelColor="dark"
+                    as='div'>
+                        Add My Property
+                    </Sidebar.Item>
+                    </Link>
+
 
                     <Link to="/dashboard?tab=myagent">
                     <Sidebar.Item 
@@ -98,5 +114,6 @@ export default function DashSidebar() {
                 </Sidebar.ItemGroup>
             </Sidebar.Items>
         </Sidebar>
+        </div>
     )
 };

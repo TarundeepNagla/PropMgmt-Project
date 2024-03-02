@@ -104,7 +104,7 @@ export default function DashProfile() {
 
   return (
     <div className='max-w-lg mx-auto p-3 w-full'>
-    <h1 className='my-7 text-center font-semibold text-3xl'>Profile (This is Work in Progress ...)</h1>
+    <h1 className='my-7 text-center font-semibold text-3xl'>User Profile</h1>
     <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
        {/*upload image functionality which is hidden as this functionality is being called in below div class.  */}
        <input type="file" accept='image/*' onChange={handleImageChange} ref={filePickerRef} hidden/> 
@@ -130,7 +130,7 @@ export default function DashProfile() {
       </Link>
     </form>   
     <div className='text-red-500 flex justify-between mt-5'>
-      <span className='cursor-pointer'>Delete Account</span>
+      {/* <span className='cursor-pointer'>Delete Account</span> */}
       <span className='cursor-pointer' onClick={handleSignout}>Sign Out</span>
     </div> 
       {updateUserSuccess && (

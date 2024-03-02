@@ -118,12 +118,14 @@ export default function CreateListing() {
           userRef: currentUser._id,
         }),
       });
+      console.log(currentUser._id,)
       const data = await res.json();
       setLoading(false)
       if (data.success == false) {
         setError(data.message);
       }
-      navigate(`/listing/${data._id}`)
+      // navigate(`/listing/${data._id}`)
+      navigate('/dashboard')
 
     } catch (error) {
       setError(error.message);

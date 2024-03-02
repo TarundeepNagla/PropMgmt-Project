@@ -30,7 +30,11 @@ const listingSchema = new mongoose.Schema(
     agent:{
         type: String,
         required: true,
-    }
+    },
+    userRef: {
+      type: String,
+      required: true,
+    },
   }, { timestamps: true }
 );
   

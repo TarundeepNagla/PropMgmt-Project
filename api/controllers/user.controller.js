@@ -1,4 +1,5 @@
 
+import Listing from '../models/listing.model.js';
 import User from '../models/user.model.js';
 import { errorHandler } from '../utils/error.js';
 import bcryptjs from 'bcryptjs';
@@ -8,7 +9,7 @@ export const test =(req, res) => {
 };
 
 export const updateUser = async (req, res, next) => {
-    // userId from Cookie we are receiving from (req.user) 
+    // user.id from Cookie we are receiving from (req.user) 
     //  for logged in user, UserId we can receive from (req.params). Now we need to match if both are same, user is authenticated.
     if (req.user.id != req.params.userId){
         return next(errorHandler(403, 'You are not allowed to update credentials'))
@@ -60,3 +61,18 @@ export const signout =(req, res, next) => {
         next(error)
     }
 };
+
+export const getUserListing = async (req, res, next) => {
+    
+    if (req.user.id == req.params.userId){
+        try {
+            const listing = await Listing.find({userRef: req.params.userId })
+            res.status(200).json(listing);
+        } catch (error) {
+            
+        }
+    }else{
+        return next(errorHandler(401, 'You can view your own listing!'))
+    }
+
+}
