@@ -62,8 +62,7 @@ export default function DashSidebar() {
                     </Sidebar.Item>
                     </Link>
                     {/* <Link to="/myproperty"> */}
-                    {/* <Link to={`/listing/${currentUser._id}`}> */}
-                    <Link to='/dashboard?tab=listings'>
+                    <Link to={`/listing/${currentUser._id}`}>
                     <Sidebar.Item 
                     active={tab=='listings'} 
                     icon={HiOutlineHome} 

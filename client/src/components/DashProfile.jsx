@@ -18,6 +18,7 @@ export default function DashProfile() {
   const { currentUser } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
+  const [showListingsError, setshowListingsError] = useState(false);
   const filePickerRef = useRef();
   // const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
   // const [imageFileUploadError, setImageFileUploadError] = useState(null);
@@ -102,6 +103,22 @@ export default function DashProfile() {
     }
   };
 
+  const handleShowListings = async () => {
+    try {
+      setshowListingsError(false);
+      const res = await fetch(`/api/user/listing/${currentUser._id}`)
+      const data = await res.json();
+      if (data.success == false){
+        setshowListingsError(true);
+        
+        return
+      }
+    } catch (error) {
+      setshowListingsError(true);
+    }
+  }
+
+
   return (
     <div className='max-w-lg mx-auto p-3 w-full'>
     <h1 className='my-7 text-center font-semibold text-3xl'>User Profile</h1>
@@ -120,11 +137,11 @@ export default function DashProfile() {
       <TextInput type='email' id='email' placeholder='email'
       defaultValue={currentUser.email}  onChange={handleChange}/> 
       <TextInput type='password' id='password' placeholder='password' onChange={handleChange}/> 
-      <Button type='submit'>
+      <Button className='rounded-full' type='submit'>
         Update
       </Button>
       <Link to={'/create-listing'}>
-      <Button type='button' className='w-full'>
+      <Button type='button' className='rounded-full w-full'>
         Add Property
       </Button>
       </Link>
@@ -133,6 +150,14 @@ export default function DashProfile() {
       {/* <span className='cursor-pointer'>Delete Account</span> */}
       <span className='cursor-pointer' onClick={handleSignout}>Sign Out</span>
     </div> 
+    
+      <Button onClick={handleShowListings} type='button' gradientDuoTone="greenToBlue" className='rounded-full w-full'>
+        Show Listing
+      </Button>
+      
+      <p>
+        {showListingsError ? 'Error showing listings': ''}
+      </p>
       {updateUserSuccess && (
         <Alert color='success' className='mt-5'>
           {updateUserSuccess}
@@ -143,6 +168,7 @@ export default function DashProfile() {
           {updateUserError}
         </Alert>
       )}
+      
     </div>
 
   )
