@@ -28,8 +28,8 @@ export default function App() {
           <Route path='/' element={<Home />} />
         </Route>
         <Route path='/projects' element={<Projects />} />
-        {/* <Route path='/listing/:listingId' element={<Listing />} /> */}
-        <Route path={`/listing/${currentUser._id}`} element={<Listing />}/>
+        <Route path='/listing/:listingId' element={<Listing />} />
+        {/* <Route path={`/listing/${currentUser.id}`} element={<Listing />}/> */}
         <Route path='/signin' element={<SignIn />} />
         <Route path='/signup' element={<SignUp />} />
       </Routes>

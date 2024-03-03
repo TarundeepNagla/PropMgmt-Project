@@ -120,10 +120,27 @@ export default function DashProfile() {
     }
   }
 
+    const handListingDelete = async (listingId) => {
+      try {
+        const res = await fetch(`/api/listing/delete/${listingId}`,{
+          method: 'DELETE',
+        });
+        const data = await res.json();
+        if (data.success == false){
+          console.log(data.message);
+          return;
+        }
+        setUserListings((prev) => prev.filter((listing) => listing._id !== listingId));
+      } catch (error) {
+        console.log(error.message)
+        
+      }
+    };
 
   return (
     <div className='max-w-lg mx-auto p-3 w-full'>
     <h1 className='my-7 text-center font-semibold text-3xl'>My Property Listing</h1>
+    
     <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
        {/*upload image functionality which is hidden as this functionality is being called in below div class.  */}
        <input type="file" accept='image/*' onChange={handleImageChange} ref={filePickerRef} hidden/> 
@@ -175,15 +192,13 @@ export default function DashProfile() {
               <p>{listing.name}</p>
             </Link>
             <div className="flex flex-col">
-              <button className="text-red-600">Delete</button>
+              <button onClick={() => handListingDelete(listing._id)} className="text-red-600">Delete</button>
               <button className="text-black-600">Edit</button>
             </div>
 
           </div>
       ))
-
       }
-
       {updateUserSuccess && (
         <Alert color='success' className='mt-5'>
           {updateUserSuccess}

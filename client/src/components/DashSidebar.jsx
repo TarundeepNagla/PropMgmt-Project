@@ -9,6 +9,7 @@ import {
     HiOutlineHome ,
     HiOutlineUser ,
     HiOutlineClipboardList ,
+    HiChartPie,
 } from 'react-icons/hi';
 
 import { useEffect, useState } from 'react';
@@ -51,6 +52,18 @@ export default function DashSidebar() {
         <Sidebar className='w-full md:w-56'>
             <Sidebar.Items>
                 <Sidebar.ItemGroup className='flex flex-col gap-5'>
+
+                    <Link to="/dashboard">
+                    <Sidebar.Item 
+                    active={tab=='dashboard'} 
+                    icon={HiChartPie} 
+                    label={currentUser.isAdmin ? 'Admin': 'User'} 
+                    labelColor="dark"
+                    as='div'>
+                        Dashboard
+                    </Sidebar.Item>
+                    </Link>
+
                     <Link to="/dashboard?tab=profile">
                     <Sidebar.Item 
                     active={tab=='profile'} 
@@ -76,7 +89,7 @@ export default function DashSidebar() {
                     <Link to='/create-listing'>
                     <Sidebar.Item 
                     icon={HiOutlinePlusCircle} 
-                    label={""} 
+                    label={currentUser.isAdmin ? 'Admin': 'User'}
                     labelColor="dark"
                     as='div'>
                         Add My Property

@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom'; // useLocation is to utilize (tab=profile ..etc) in URL address bar.
+import { useSelector } from 'react-redux';
 import DashSidebar from '../components/DashSidebar';
 import DashProfile from '../components/DashProfile';
-// import DashPosts from '../components/DashPosts';
 import DashUsers from '../components/DashUsers';
 import DashAgent from '../components/Dashboardagent';
-import DashListings from '../components/Dashlistings';
 import DashServices from '../components/Dashboardservices';
+// import Listing from './pages/Listing';
 
 export default function Dashboard() {
   const location = useLocation();
+  const {currentUser} = useSelector(state => state.user)
+  
   const [tab, setTab] = useState('');
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -33,7 +35,7 @@ export default function Dashboard() {
       {/* users */}
       {tab === 'users' && <DashUsers />}
       {/* property  */}
-      {tab === 'listings' && <DashListings />}
+      {tab === `/listing/${currentUser._id}` && <Listing />}
       {/* myagent */}
       {tab === 'myagent' && <DashAgent />}
       {/* services */}
