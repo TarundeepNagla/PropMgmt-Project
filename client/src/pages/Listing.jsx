@@ -193,7 +193,9 @@ export default function DashProfile() {
             </Link>
             <div className="flex flex-col">
               <button onClick={() => handListingDelete(listing._id)} className="text-red-600">Delete</button>
+              <Link to={`/update-listing/${listing._id}`}>
               <button className="text-black-600">Edit</button>
+              </Link>
             </div>
 
           </div>

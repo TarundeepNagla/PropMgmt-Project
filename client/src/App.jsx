@@ -12,9 +12,10 @@ import PrivateRoute from './components/PrivateRoute'
 import CreateListing from './pages/CreateListing';
 import Listing from './pages/Listing';
 import { useSelector } from 'react-redux';
+import Updatelisting from './pages/Updatelisting';
 
 export default function App() {
-  const {currentUser} = useSelector(state => state.user)
+  // const {currentUser} = useSelector(state => state.user)
   return (
     <BrowserRouter>
     <Header />
@@ -26,10 +27,10 @@ export default function App() {
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/create-listing' element={<CreateListing />} />
           <Route path='/' element={<Home />} />
+          <Route path='/update-listing/:listingId' element={<Updatelisting />} />
         </Route>
         <Route path='/projects' element={<Projects />} />
         <Route path='/listing/:listingId' element={<Listing />} />
-        {/* <Route path={`/listing/${currentUser.id}`} element={<Listing />}/> */}
         <Route path='/signin' element={<SignIn />} />
         <Route path='/signup' element={<SignUp />} />
       </Routes>
