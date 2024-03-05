@@ -1,20 +1,20 @@
-import {  Button, TextInput } from 'flowbite-react';
+import { Modal, Table, Button, TextInput } from 'flowbite-react';
 import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { set } from 'mongoose';
-// import {
-//   updateStart,
-//   updateSuccess,
-//   updateFailure,
-//   // deleteUserStart,
-//   // deleteUserSuccess,
-//   // deleteUserFailure,
-//   signoutSuccess,
-// } from '../redux/user/userSlice';
+import {
+  updateStart,
+  updateSuccess,
+  updateFailure,
+  // deleteUserStart,
+  // deleteUserSuccess,
+  // deleteUserFailure,
+  signoutSuccess,
+} from '../redux/user/userSlice';
 
-export default function DashProfile() {
+export default function UserProfile() {
   const { currentUser } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
@@ -28,7 +28,6 @@ export default function DashProfile() {
   // const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({});
   const dispatch = useDispatch();
-  const [userListings, setUserListings] = useState([]);
 
   const handleImageChange = (e) => {
     // to upload 1 file only
@@ -48,21 +47,21 @@ export default function DashProfile() {
   //   console.log('uploading the image...')
   // }
 
-  // const handleSignout = async () => {
-  //   try {
-  //     const res = await fetch('/api/user/signout', {
-  //       method: 'POST',
-  //     });
-  //     const data = await res.json();
-  //     if (!res.ok) {
-  //       console.log(data.message);
-  //     } else {
-  //       dispatch(signoutSuccess());
-  //     }
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
+  const handleSignout = async () => {
+    try {
+      const res = await fetch('/api/user/signout', {
+        method: 'POST',
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        dispatch(signoutSuccess());
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -111,36 +110,18 @@ export default function DashProfile() {
       const data = await res.json();
       if (data.success == false){
         setshowListingsError(true);
+        
         return
       }
-      // to store the listing data.
-      setUserListings(data);
     } catch (error) {
       setshowListingsError(true);
     }
   }
 
-    const handListingDelete = async (listingId) => {
-      try {
-        const res = await fetch(`/api/listing/delete/${listingId}`,{
-          method: 'DELETE',
-        });
-        const data = await res.json();
-        if (data.success == false){
-          console.log(data.message);
-          return;
-        }
-        setUserListings((prev) => prev.filter((listing) => listing._id !== listingId));
-      } catch (error) {
-        console.log(error.message)
-        
-      }
-    };
 
   return (
     <div className='max-w-lg mx-auto p-3 w-full'>
-    <h1 className='my-7 text-center font-semibold text-3xl'>My Property Listing</h1>
-    
+    <h1 className='my-7 text-center font-semibold text-3xl'>User Profile</h1>
     <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
        {/*upload image functionality which is hidden as this functionality is being called in below div class.  */}
        <input type="file" accept='image/*' onChange={handleImageChange} ref={filePickerRef} hidden/> 
@@ -151,23 +132,23 @@ export default function DashProfile() {
       alt='user' 
       className='rounded-full w-full h-full object-cover border-8 border-[lightgray]'/>
       </div>
-      {/* <TextInput type='text' id='username' placeholder='username'
+      <TextInput type='text' id='username' placeholder='username'
       defaultValue={currentUser.username}  onChange={handleChange}/> 
       <TextInput type='email' id='email' placeholder='email'
       defaultValue={currentUser.email}  onChange={handleChange}/> 
-      <TextInput type='password' id='password' placeholder='password' onChange={handleChange}/>  */}
-      {/* <Button className='rounded-full' type='submit'>
+      <TextInput type='password' id='password' placeholder='password' onChange={handleChange}/> 
+      <Button className='rounded-full' type='submit'>
         Update
       </Button>
       <Link to={'/create-listing'}>
       <Button type='button' className='rounded-full w-full'>
         Add Property
       </Button>
-      </Link> */}
+      </Link>
     </form>   
     <div className='text-red-500 flex justify-between mt-5'>
       {/* <span className='cursor-pointer'>Delete Account</span> */}
-      {/* <span className='cursor-pointer' onClick={handleSignout}>Sign Out</span> */}
+      <span className='cursor-pointer' onClick={handleSignout}>Sign Out</span>
     </div> 
     
       <Button onClick={handleShowListings} type='button' gradientDuoTone="greenToBlue" className='rounded-full w-full'>
@@ -177,30 +158,6 @@ export default function DashProfile() {
       <p>
         {showListingsError ? 'Error showing listings': ''}
       </p>
-
-      {/* to show the listings */}
-
-      {userListings && userListings.length > 0 &&
-
-    
-      userListings.map((listing) => (
-          <div key={listing._id} className="border rounded-lg p-3 flex justify-between item-center gap-4">
-            <Link to={`/listing/${listing._id}`}>
-              <img src={listing.imageUrls[0]} alt='listing cover' className='h-16 w-16 object-contain'/>
-            </Link>
-            <Link className="'text-slate-700 font-semibold  hover:underline truncate flex-1" to={`/listing/${listing._id}`}>
-              <p>{listing.name}</p>
-            </Link>
-            <div className="flex flex-col">
-              <button onClick={() => handListingDelete(listing._id)} className="text-red-600">Delete</button>
-              <Link to={`/update-listing/${listing._id}`}>
-              <button className="text-black-600">Edit</button>
-              </Link>
-            </div>
-
-          </div>
-      ))
-      }
       {updateUserSuccess && (
         <Alert color='success' className='mt-5'>
           {updateUserSuccess}

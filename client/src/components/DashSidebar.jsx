@@ -53,7 +53,7 @@ export default function DashSidebar() {
             <Sidebar.Items>
                 <Sidebar.ItemGroup className='flex flex-col gap-5'>
 
-                    <Link to="/dashboard">
+                    <Link to={`/dashboard/${currentUser._id}`}>
                     <Sidebar.Item 
                     active={tab=='dashboard'} 
                     icon={HiChartPie} 
@@ -64,7 +64,8 @@ export default function DashSidebar() {
                     </Sidebar.Item>
                     </Link>
 
-                    <Link to="/dashboard?tab=profile">
+                    {/* <Link to="/dashboard?tab=profile"> */}
+                    <Link to="/profile">
                     <Sidebar.Item 
                     active={tab=='profile'} 
                     icon={HiUser} 

@@ -76,3 +76,18 @@ export const getUserListing = async (req, res, next) => {
     }
 
 }
+
+export const getTotalListing = async (req, res, next) => {
+    
+    if (req.user.id == req.params.userId){
+        try {
+            const listing = await Listing.countDocuments({userRef: req.params.userId })
+            res.status(200).json(listing);
+        } catch (error) {
+            
+        }
+    }else{
+        return next(errorHandler(401, 'You can view your own listing!'))
+    }
+
+}

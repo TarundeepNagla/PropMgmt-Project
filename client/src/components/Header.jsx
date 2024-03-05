@@ -69,7 +69,7 @@ export default function Header() {
                         <span className='block text-sm'>@{currentUser.username}</span>
                         <span className='block text-sm truncate'>@{currentUser.email}</span>
                     </Dropdown.Header>
-                        <Link to={'/dashboard?tab=profile'}>
+                        <Link to={'/profile'}>
                             <Dropdown.Item>
                                 Profile
                             </Dropdown.Item>
@@ -90,7 +90,7 @@ export default function Header() {
         </div>
         <Navbar.Collapse>
             <Navbar.Link active={path === "/"} as={'div'}>
-                <Link to='/'>
+                <Link to='/dashboard'>
                     Home
                 </Link>
             </Navbar.Link>

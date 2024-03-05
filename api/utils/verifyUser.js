@@ -1,6 +1,6 @@
 
 //  This is for authentication of the user using JSON Web token (JWT)
-// This validates only the users who are signin can update their profile. 
+// This validates only the users who are signin can update their data. 
 import jwt from 'jsonwebtoken';
 import {errorHandler} from './error.js'
 
