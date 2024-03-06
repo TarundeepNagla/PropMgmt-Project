@@ -87,16 +87,29 @@ export default function DashSidebar() {
                     </Sidebar.Item>
                     </Link>
                     
-                    <Link to='/create-listing'>
-                    <Sidebar.Item 
-                    icon={HiOutlinePlusCircle} 
-                    label={currentUser.isAdmin ? 'Admin': 'User'}
-                    labelColor="dark"
-                    as='div'>
-                        Add My Property
-                    </Sidebar.Item>
-                    </Link>
+                    {currentUser.isAdmin && (  
+                        <Link to='/create-listing'>
+                        <Sidebar.Item 
+                        icon={HiOutlinePlusCircle} 
+                        label={currentUser.isAdmin ? 'Admin': 'User'}
+                        labelColor="dark"
+                        as='div'>
+                            Add A Property
+                        </Sidebar.Item>
+                        </Link>
+                    )}
 
+                    {currentUser.isAdmin && (  
+                        <Link to='/create-agent'>
+                        <Sidebar.Item 
+                        icon={HiOutlinePlusCircle} 
+                        label={currentUser.isAdmin ? 'Admin': 'User'}
+                        labelColor="dark"
+                        as='div'>
+                            Add Service Agent
+                        </Sidebar.Item>
+                        </Link>
+                    )}
 
                     <Link to="/dashboard?tab=myagent">
                     <Sidebar.Item 
@@ -105,19 +118,19 @@ export default function DashSidebar() {
                     label={""} 
                     labelColor="dark"
                     as='div'>
-                        My Agent
+                        My Property Manager
                     </Sidebar.Item>
                     </Link>
 
 
-                    <Link to="/dashboard?tab=services">
+                    <Link to={`/services/${currentUser._id}`}>
                     <Sidebar.Item 
                     active={tab=='services'} 
                     icon={HiOutlineClipboardList  } 
                     label={""} 
                     labelColor="dark"
                     as='div'>
-                        Services
+                       Book a Service
                     </Sidebar.Item>
                     </Link>
 

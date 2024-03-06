@@ -3,19 +3,17 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Projects from './pages/Projects';
-// import Dashboard from './pages/Dashboard';
 import About from './pages/About';
-import Home from './pages/Home';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import PrivateRoute from './components/PrivateRoute'
 import CreateListing from './pages/CreateListing';
 import Listing from './pages/Listing';
 import Updatelisting from './pages/Updatelisting';
-import DashProfile from './components/DashProfile';
 import UserProfile from './pages/UserProfile'
-// import DashboardPage from './pages/DashboardPage';
 import Dashboard from './pages/Dashboard';
+import UserServices from './pages/UserServices'
+import CreateAgent from './pages/CreateAgent'
 
 
 export default function App() {
@@ -30,10 +28,11 @@ export default function App() {
         <Route element={<PrivateRoute />}>
           <Route path='/dashboard/:dashId' element={<Dashboard />} />
           <Route path='/create-listing' element={<CreateListing />} />
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<Dashboard />} />
           <Route path='/update-listing/:listingId' element={<Updatelisting />} />
           <Route path='/profile' element={<UserProfile />} />
-          {/* <Route path='/dashboard?tab=profile' element={<UserProfile />} /> */}
+          <Route path='/services/:serviceId' element={<UserServices />} />
+          <Route path='/create-agent' element={<CreateAgent />} />
 
         </Route>
         <Route path='/projects' element={<Projects />} />

@@ -1,7 +1,7 @@
 import { Modal, Table, Button, TextInput } from 'flowbite-react';
 import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { set } from 'mongoose';
 import {
@@ -58,6 +58,7 @@ export default function DashProfile() {
       } else {
         dispatch(signoutSuccess());
       }
+      // Navigate('/sign-up')
     } catch (error) {
       console.log(error.message);
     }

@@ -6,6 +6,7 @@ import authRoutes from './routes/auth.route.js'
 import cors from 'cors';
 import cookieParser from 'cookie-parser'; 
 import listingRouter from './routes/listing.route.js'
+import agentRoutes from "./routes/agent.route.js"
 
 
 
@@ -33,6 +34,7 @@ app.listen(3000, () => {
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/listing', listingRouter);
+app.use('/api/agent', agentRoutes);
 
 // creating middle ware
 

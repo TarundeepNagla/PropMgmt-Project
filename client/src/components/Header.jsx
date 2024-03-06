@@ -90,7 +90,8 @@ export default function Header() {
         </div>
         <Navbar.Collapse>
             <Navbar.Link active={path === "/"} as={'div'}>
-                <Link to='/dashboard'>
+                {/* <Link to={`/dashboard/${currentUser._id}`}> */}
+                <Link to={'/'}>
                     Home
                 </Link>
             </Navbar.Link>
